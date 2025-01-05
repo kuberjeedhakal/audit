@@ -185,6 +185,23 @@
                 </tbody>
             </table>
 
+            <div class="form-group">
+                <h3>क्रस, बिल, भरपाइ तालिका</h3>
+                <table id="calculationTable">
+                    <thead>
+                        <tr>
+                            <th>क्रस</th>
+                            <th>बिल</th>
+                            <th>भरपाइ</th>
+                            <th>कार्य</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <button type="button" class="btn" onclick="addCalculationRow()">Add Row</button>
+            </div>
+
             <button type="submit" class="btn">Submit</button>
             <button type="button" class="btn" onclick="downloadTableAsWord()">Download as Word</button>
         </form>
@@ -220,6 +237,27 @@
             });
 
             document.getElementById('voucherForm').reset();
+        }
+
+        function addCalculationRow() {
+            const table = document.getElementById('calculationTable').getElementsByTagName('tbody')[0];
+            const row = table.insertRow();
+
+            ['क्रस', 'बिल', 'भरपाइ'].forEach(() => {
+                const cell = row.insertCell();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.style.width = '100%';
+                cell.appendChild(input);
+            });
+
+            const actionCell = row.insertCell();
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'btn';
+            deleteButton.style.backgroundColor = '#e74c3c';
+            deleteButton.onclick = () => row.remove();
+            actionCell.appendChild(deleteButton);
         }
 
         function downloadTableAsWord() {
