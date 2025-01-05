@@ -186,6 +186,7 @@
             </table>
 
             <button type="submit" class="btn">Submit</button>
+            <button type="button" class="btn" onclick="downloadTableAsWord()">Download as Word</button>
         </form>
     </div>
 
@@ -219,6 +220,19 @@
             });
 
             document.getElementById('voucherForm').reset();
+        }
+
+        function downloadTableAsWord() {
+            const table = document.getElementById('dataTable');
+            let html = "<table border='1' style='border-collapse: collapse; width: 100%;'>";
+            html += table.innerHTML;
+            html += "</table>";
+
+            const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'voucher_data.doc';
+            link.click();
         }
     </script>
 </body>
