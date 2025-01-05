@@ -113,11 +113,48 @@
 
             <div class="form-group">
                 <label for="expenseType">खर्च शिर्षक</label>
-                <select id="expenseType" name="expenseType">
+                <select id="expenseType" name="expenseType" onchange="updateExpenseChecklist()">
                     <option value="">-- Select Type --</option>
                     <option value="current">चालु</option>
                     <option value="capital">पुजिगत</option>
                 </select>
+            </div>
+
+            <div class="form-group" id="currentExpenses" style="display: none;">
+                <label>चालु खर्च:</label>
+                <div class="checklist">
+                    <input type="checkbox" id="municipalityCurrent" name="currentExpenses" value="नगरपालिका चालु">
+                    <label for="municipalityCurrent">नगरपालिका चालु</label><br>
+
+                    <input type="checkbox" id="subjectBranchCurrent" name="currentExpenses" value="विषयगत शाखा चालु">
+                    <label for="subjectBranchCurrent">विषयगत शाखा चालु</label><br>
+
+                    <input type="checkbox" id="federalConditionalCurrent" name="currentExpenses" value="संघीय शसर्त चालु">
+                    <label for="federalConditionalCurrent">संघीय शसर्त चालु</label><br>
+
+                    <input type="checkbox" id="provincialConditionalCurrent" name="currentExpenses" value="प्रदेश सशर्त चालु">
+                    <label for="provincialConditionalCurrent">प्रदेश सशर्त चालु</label><br>
+                </div>
+            </div>
+
+            <div class="form-group" id="capitalExpenses" style="display: none;">
+                <label>पुजिगत खर्च:</label>
+                <div class="checklist">
+                    <input type="checkbox" id="federalConditionalCapital" name="capitalExpenses" value="संघीय शसर्त पुजिगत">
+                    <label for="federalConditionalCapital">संघीय शसर्त पुजिगत</label><br>
+
+                    <input type="checkbox" id="provincialConditionalCapital" name="capitalExpenses" value="प्रदेश सशर्त पुजिगत">
+                    <label for="provincialConditionalCapital">प्रदेश सशर्त पुजिगत</label><br>
+
+                    <input type="checkbox" id="municipalityCapital" name="capitalExpenses" value="नगरपालिका पुजिगत">
+                    <label for="municipalityCapital">नगरपालिका पुजिगत</label><br>
+
+                    <input type="checkbox" id="repairFund" name="capitalExpenses" value="मर्मत संभार कोष">
+                    <label for="repairFund">मर्मत संभार कोष</label><br>
+
+                    <input type="checkbox" id="disasterFund" name="capitalExpenses" value="विपद व्यवस्थापन कोष">
+                    <label for="disasterFund">विपद व्यवस्थापन कोष</label><br>
+                </div>
             </div>
 
             <div class="form-group">
@@ -128,49 +165,6 @@
             <div class="form-group">
                 <label for="remarks">कैफीयत</label>
                 <textarea id="remarks" name="remarks" placeholder="Enter Remarks"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>कागजात (Checklist)</label>
-                <div class="checklist">
-                    <input type="checkbox" id="purchaseDecision" name="documents" value="Purchase Decision">
-                    <label for="purchaseDecision">१. खरिद निर्णय</label><br>
-
-                    <input type="checkbox" id="costEstimate" name="documents" value="Cost Estimate">
-                    <label for="costEstimate">२. लागत अनुमान</label><br>
-
-                    <input type="checkbox" id="workOrder" name="documents" value="Work Order">
-                    <label for="workOrder">३. कार्यदेश</label><br>
-
-                    <input type="checkbox" id="agreement" name="documents" value="Agreement">
-                    <label for="agreement">४. सम्झौता</label><br>
-
-                    <input type="checkbox" id="photos" name="documents" value="Photos">
-                    <label for="photos">५. तस्विरहरु</label><br>
-
-                    <input type="checkbox" id="performanceReport" name="documents" value="Performance Report">
-                    <label for="performanceReport">६. कार्यसम्पादन प्रतिवेदन</label><br>
-
-                    <input type="checkbox" id="performanceGuarantee" name="documents" value="Performance Guarantee">
-                    <label for="performanceGuarantee">७. कार्यसम्पादन जमानत</label><br>
-
-                    <input type="checkbox" id="specifications" name="documents" value="Specifications">
-                    <label for="specifications">८. स्पेशीफिकेशन</label><br>
-
-                    <input type="checkbox" id="workAcceptanceReport" name="documents" value="Work Acceptance Report">
-                    <label for="workAcceptanceReport">९. कार्यस्विकार प्रतिवेदन</label><br>
-
-                    <input type="checkbox" id="paymentRecommendation" name="documents" value="Payment Recommendation">
-                    <label for="paymentRecommendation">१०. भुक्तानी सिफारिस</label><br>
-
-                    <input type="checkbox" id="psItemBill" name="documents" value="PS Item Bill">
-                    <label for="psItemBill">११. पिएस आइटम बिल</label><br>
-                </div>
-            </div>
-
-            <div class="upload">
-                <label for="uploadFile">Existing Word File</label>
-                <input type="file" id="uploadFile" name="uploadFile" accept=".doc,.docx" onchange="handleFileUpload(event)">
             </div>
 
             <table id="dataTable">
@@ -188,47 +182,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Data rows will be added dynamically -->
                 </tbody>
             </table>
 
             <button type="submit" class="btn">Submit</button>
-            <button type="button" class="btn" onclick="downloadAsWord()">Download as Word</button>
         </form>
     </div>
 
     <script>
-        function downloadAsWord() {
-            const content = document.getElementById('voucherForm').outerHTML;
-            const blob = new Blob([content], { type: 'application/msword' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'voucher_form.doc';
-            link.click();
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const content = e.target.result;
-                    parseWordContent(content);
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        function parseWordContent(content) {
-            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const rows = content.split('\n').map(row => row.split('\t'));
-            rows.forEach(rowData => {
-                const row = table.insertRow();
-                rowData.forEach(cellData => {
-                    const cell = row.insertCell();
-                    cell.textContent = cellData;
-                });
-            });
+        function updateExpenseChecklist() {
+            const expenseType = document.getElementById('expenseType').value;
+            document.getElementById('currentExpenses').style.display = expenseType === 'current' ? 'block' : 'none';
+            document.getElementById('capitalExpenses').style.display = expenseType === 'capital' ? 'block' : 'none';
         }
 
         function addFormDataToTable(event) {
