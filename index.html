@@ -181,6 +181,7 @@
             <button type="button" class="btn" onclick="addRowToCalculationTable()">Add Row</button>
             <button type="submit" class="btn">Submit</button>
             <button type="button" class="btn" onclick="downloadTableAsWord()">Download as Word</button>
+            <button type="button" class="btn" onclick="printPage()">Print / Save as PDF</button>
         </form>
     </div>
 
@@ -245,6 +246,10 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'voucher_data.doc';
             link.click();
+        }
+
+        function printPage() {
+            window.print();
         }
     </script>
 </body>
