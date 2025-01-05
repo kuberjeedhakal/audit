@@ -75,6 +75,10 @@
         .upload {
             margin-bottom: 20px;
         }
+        .expense-checklist {
+            display: none;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -118,6 +122,40 @@
                     <option value="current">चालु</option>
                     <option value="capital">पुजिगत</option>
                 </select>
+
+                <div id="currentExpenses" class="expense-checklist">
+                    <label>चालु खर्च:</label>
+                    <input type="checkbox" id="municipalityCurrent" name="currentExpenses" value="नगरपालिका चालु"> नगरपालिका चालु<br>
+                    <input type="checkbox" id="subjectBranchCurrent" name="currentExpenses" value="विषयगत शाखा चालु"> विषयगत शाखा चालु<br>
+                    <input type="checkbox" id="federalConditionalCurrent" name="currentExpenses" value="संघीय शसर्त चालु"> संघीय शसर्त चालु<br>
+                    <input type="checkbox" id="provincialConditionalCurrent" name="currentExpenses" value="प्रदेश सशर्त चालु"> प्रदेश सशर्त चालु<br>
+                </div>
+
+                <div id="capitalExpenses" class="expense-checklist">
+                    <label>पुजिगत खर्च:</label>
+                    <input type="checkbox" id="federalConditionalCapital" name="capitalExpenses" value="संघीय शसर्त पुजिगत"> संघीय शसर्त पुजिगत<br>
+                    <input type="checkbox" id="provincialConditionalCapital" name="capitalExpenses" value="प्रदेश सशर्त पुजिगत"> प्रदेश सशर्त पुजिगत<br>
+                    <input type="checkbox" id="municipalityCapital" name="capitalExpenses" value="नगरपालिका पुजिगत"> नगरपालिका पुजिगत<br>
+                    <input type="checkbox" id="repairFund" name="capitalExpenses" value="मर्मत संभार कोष"> मर्मत संभार कोष<br>
+                    <input type="checkbox" id="disasterFund" name="capitalExpenses" value="विपद व्यवस्थापन कोष"> विपद व्यवस्थापन कोष<br>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="documents">कागजातहरुको चेकलिस्ट</label>
+                <div class="checklist">
+                    <input type="checkbox" id="purchaseDecision" name="documents" value="खरिद निर्णय"> खरिद निर्णय<br>
+                    <input type="checkbox" id="costEstimate" name="documents" value="लागत अनुमान"> लागत अनुमान<br>
+                    <input type="checkbox" id="workOrder" name="documents" value="कार्यदेश"> कार्यदेश<br>
+                    <input type="checkbox" id="agreement" name="documents" value="सम्झौता"> सम्झौता<br>
+                    <input type="checkbox" id="photos" name="documents" value="तस्वीरहरु"> तस्वीरहरु<br>
+                    <input type="checkbox" id="performanceReport" name="documents" value="कार्यसम्पादन प्रतिवेदन"> कार्यसम्पादन प्रतिवेदन<br>
+                    <input type="checkbox" id="performanceGuarantee" name="documents" value="कार्यसम्पादन जमानत"> कार्यसम्पादन जमानत<br>
+                    <input type="checkbox" id="specifications" name="documents" value="स्पेशिफिकेशन"> स्पेशिफिकेशन<br>
+                    <input type="checkbox" id="workAcceptanceReport" name="documents" value="कार्य स्वीकृति प्रतिवेदन"> कार्य स्वीकृति प्रतिवेदन<br>
+                    <input type="checkbox" id="paymentRecommendation" name="documents" value="भुक्तानी सिफारिस"> भुक्तानी सिफारिस<br>
+                    <input type="checkbox" id="psItemBill" name="documents" value="पिएस आइटम बिल"> पिएस आइटम बिल<br>
+                </div>
             </div>
 
             <div class="form-group">
