@@ -80,7 +80,7 @@
 <body>
     <div class="container">
         <h1>Voucher Entry Form</h1>
-        <form id="voucherForm">
+        <form id="voucherForm" onsubmit="addFormDataToTable(event)">
             <div class="form-group">
                 <label for="voucherNumber">भौचर नं</label>
                 <input type="text" id="voucherNumber" name="voucherNumber" placeholder="Enter Voucher Number">
@@ -170,16 +170,21 @@
 
             <div class="upload">
                 <label for="uploadFile">Existing Word File</label>
-                <input type="file" id="uploadFile" name="uploadFile" accept=".doc,.docx">
+                <input type="file" id="uploadFile" name="uploadFile" accept=".doc,.docx" onchange="handleFileUpload(event)">
             </div>
 
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>Item</th>
-                        <th>Details</th>
-                        <th>Amount</th>
-                        <th>Comments</th>
+                        <th>भौचर नं</th>
+                        <th>श्रोत</th>
+                        <th>कारोबार रकम</th>
+                        <th>कारोबारको ब्यहोरा</th>
+                        <th>भुक्तानी पाउनेको नाम</th>
+                        <th>पान नं</th>
+                        <th>खर्च शिर्षक</th>
+                        <th>शाखाहरुको नाम</th>
+                        <th>कैफीयत</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -202,7 +207,54 @@
             link.click();
         }
 
-        // Additional functionality for dynamic table rows and file upload will be implemented here.
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const content = e.target.result;
+                    parseWordContent(content);
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function parseWordContent(content) {
+            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const rows = content.split('\n').map(row => row.split('\t'));
+            rows.forEach(rowData => {
+                const row = table.insertRow();
+                rowData.forEach(cellData => {
+                    const cell = row.insertCell();
+                    cell.textContent = cellData;
+                });
+            });
+        }
+
+        function addFormDataToTable(event) {
+            event.preventDefault();
+            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const row = table.insertRow();
+
+            const formData = [
+                document.getElementById('voucherNumber').value,
+                document.getElementById('source').value,
+                document.getElementById('amount').value,
+                document.getElementById('transactionDetails').value,
+                document.getElementById('payeeName').value,
+                document.getElementById('panNumber').value,
+                document.getElementById('expenseType').value,
+                document.getElementById('branch').value,
+                document.getElementById('remarks').value
+            ];
+
+            formData.forEach(data => {
+                const cell = row.insertCell();
+                cell.textContent = data;
+            });
+
+            document.getElementById('voucherForm').reset();
+        }
     </script>
 </body>
 </html>
