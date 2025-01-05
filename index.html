@@ -120,43 +120,6 @@
                 </select>
             </div>
 
-            <div class="form-group" id="currentExpenses" style="display: none;">
-                <label>चालु खर्च:</label>
-                <div class="checklist">
-                    <input type="checkbox" id="municipalityCurrent" name="currentExpenses" value="नगरपालिका चालु">
-                    <label for="municipalityCurrent">नगरपालिका चालु</label><br>
-
-                    <input type="checkbox" id="subjectBranchCurrent" name="currentExpenses" value="विषयगत शाखा चालु">
-                    <label for="subjectBranchCurrent">विषयगत शाखा चालु</label><br>
-
-                    <input type="checkbox" id="federalConditionalCurrent" name="currentExpenses" value="संघीय शसर्त चालु">
-                    <label for="federalConditionalCurrent">संघीय शसर्त चालु</label><br>
-
-                    <input type="checkbox" id="provincialConditionalCurrent" name="currentExpenses" value="प्रदेश सशर्त चालु">
-                    <label for="provincialConditionalCurrent">प्रदेश सशर्त चालु</label><br>
-                </div>
-            </div>
-
-            <div class="form-group" id="capitalExpenses" style="display: none;">
-                <label>पुजिगत खर्च:</label>
-                <div class="checklist">
-                    <input type="checkbox" id="federalConditionalCapital" name="capitalExpenses" value="संघीय शसर्त पुजिगत">
-                    <label for="federalConditionalCapital">संघीय शसर्त पुजिगत</label><br>
-
-                    <input type="checkbox" id="provincialConditionalCapital" name="capitalExpenses" value="प्रदेश सशर्त पुजिगत">
-                    <label for="provincialConditionalCapital">प्रदेश सशर्त पुजिगत</label><br>
-
-                    <input type="checkbox" id="municipalityCapital" name="capitalExpenses" value="नगरपालिका पुजिगत">
-                    <label for="municipalityCapital">नगरपालिका पुजिगत</label><br>
-
-                    <input type="checkbox" id="repairFund" name="capitalExpenses" value="मर्मत संभार कोष">
-                    <label for="repairFund">मर्मत संभार कोष</label><br>
-
-                    <input type="checkbox" id="disasterFund" name="capitalExpenses" value="विपद व्यवस्थापन कोष">
-                    <label for="disasterFund">विपद व्यवस्थापन कोष</label><br>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label for="branch">शाखाहरुको नाम</label>
                 <input type="text" id="branch" name="branch" placeholder="Enter Branch Name">
@@ -185,23 +148,37 @@
                 </tbody>
             </table>
 
-            <div class="form-group">
-                <h3>क्रस, बिल, भरपाइ तालिका</h3>
-                <table id="calculationTable">
-                    <thead>
-                        <tr>
-                            <th>क्रस</th>
-                            <th>बिल</th>
-                            <th>भरपाइ</th>
-                            <th>कार्य</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <button type="button" class="btn" onclick="addCalculationRow()">Add Row</button>
-            </div>
+            <h2>बिल र भरपाइ तालिका</h2>
+            <table id="calculationTable">
+                <thead>
+                    <tr>
+                        <th>क्रस</th>
+                        <th>PAN बिल</th>
+                        <th>VAT बिल</th>
+                        <th>भरपाइ</th>
+                        <th>कर नलाग्ने बिल तथा भरपाइ</th>
+                        <th>डोर हाजीरी</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="text-align:right; font-weight:bold;">योगफल:</td>
+                        <td id="totalCell" style="font-weight:bold;">0</td>
+                    </tr>
+                </tfoot>
+            </table>
 
+            <button type="button" class="btn" onclick="addRowToCalculationTable()">Add Row</button>
             <button type="submit" class="btn">Submit</button>
             <button type="button" class="btn" onclick="downloadTableAsWord()">Download as Word</button>
         </form>
@@ -239,25 +216,22 @@
             document.getElementById('voucherForm').reset();
         }
 
-        function addCalculationRow() {
+        function addRowToCalculationTable() {
             const table = document.getElementById('calculationTable').getElementsByTagName('tbody')[0];
             const row = table.insertRow();
-
-            ['क्रस', 'बिल', 'भरपाइ'].forEach(() => {
+            for (let i = 0; i < 6; i++) {
                 const cell = row.insertCell();
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.style.width = '100%';
-                cell.appendChild(input);
-            });
+                cell.innerHTML = '<input type="number" class="calc-input" oninput="calculateTotals()">';
+            }
+        }
 
-            const actionCell = row.insertCell();
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'btn';
-            deleteButton.style.backgroundColor = '#e74c3c';
-            deleteButton.onclick = () => row.remove();
-            actionCell.appendChild(deleteButton);
+        function calculateTotals() {
+            const inputs = document.querySelectorAll('.calc-input');
+            let total = 0;
+            inputs.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+            document.getElementById('totalCell').textContent = total.toFixed(2);
         }
 
         function downloadTableAsWord() {
