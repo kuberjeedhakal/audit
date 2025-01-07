@@ -11,37 +11,39 @@
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: white;
+        .toolbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .editor-container {
             padding: 20px;
-            position: fixed;
-            overflow-y: auto;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .content {
-            margin-left: 260px;
-            padding: 20px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        .sidebar a:hover {
-            text-decoration: underline;
+        .btn-group {
+            display: flex;
+            gap: 10px;
         }
         @media print {
             body * {
                 visibility: hidden;
             }
-            .content, .content * {
+            .editor-container, .editor-container * {
                 visibility: visible;
             }
-            .content {
+            .editor-container {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -50,140 +52,41 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>सेमिनार पेपर</h2>
-        <a href="#titlePage">शीर्षक पृष्ठ</a>
-        <a href="#abstract">सारांश</a>
-        <a href="#toc">सामग्री तालिका</a>
-        <a href="#introduction">परिचय</a>
-        <a href="#literatureReview">साहित्य समीक्षा</a>
-        <a href="#methodology">कार्यप्रणाली</a>
-        <a href="#analysis">विश्लेषण</a>
-        <a href="#conclusion">निष्कर्ष</a>
-        <a href="#references">सन्दर्भ</a>
-        <a href="#appendices">परिशिष्ट</a>
+    <div class="toolbar">
+        <h1 style="font-size: 1.5rem;">Seminar Paper Tool</h1>
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="saveAsWord()">Download as Word</button>
+            <button class="btn btn-secondary" onclick="printDocument()">Print</button>
+        </div>
     </div>
 
-    <div class="content">
-        <h1 id="titlePage">शीर्षक पृष्ठ (Title Page)</h1>
-        <form>
-            <div class="mb-3">
-                <label for="paperTitle" class="form-label">पेपरको शीर्षक</label>
-                <input type="text" class="form-control" id="paperTitle" placeholder="Enter paper title">
-            </div>
-            <div class="mb-3">
-                <label for="seminarTopic" class="form-label">सेमिनारको विषय</label>
-                <input type="text" class="form-control" id="seminarTopic" placeholder="Enter seminar topic">
-            </div>
-            <div class="mb-3">
-                <label for="authorName" class="form-label">लेखकको नाम</label>
-                <input type="text" class="form-control" id="authorName" placeholder="Enter author name">
-            </div>
-            <div class="mb-3">
-                <label for="collegeName" class="form-label">संस्था/कलेजको नाम</label>
-                <input type="text" class="form-control" id="collegeName" placeholder="Enter college name">
-            </div>
-            <div class="mb-3">
-                <label for="presentationDate" class="form-label">प्रस्तुत गर्ने मिति</label>
-                <input type="date" class="form-control" id="presentationDate">
-            </div>
-        </form>
-
-        <h2 id="abstract">सारांश (Abstract)</h2>
-        <textarea id="abstractEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="toc">सामग्री तालिका (Table of Contents)</h2>
-        <textarea id="tocEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="introduction">परिचय (Introduction)</h2>
-        <textarea id="introductionEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="literatureReview">साहित्य समीक्षा (Literature Review)</h2>
-        <textarea id="literatureReviewEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="methodology">कार्यप्रणाली (Methodology)</h2>
-        <textarea id="methodologyEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="analysis">विश्लेषण (Analysis and Discussion)</h2>
-        <textarea id="analysisEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="conclusion">निष्कर्ष (Conclusion)</h2>
-        <textarea id="conclusionEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="references">सन्दर्भ (References)</h2>
-        <textarea id="referencesEditor" class="form-control mb-4"></textarea>
-
-        <h2 id="appendices">परिशिष्ट (Appendices)</h2>
-        <textarea id="appendicesEditor" class="form-control mb-4"></textarea>
-
-        <button class="btn btn-primary">Save Seminar Paper</button>
-        <button class="btn btn-success" onclick="generateWordDoc()">Download as Word</button>
+    <div class="editor-container">
+        <textarea id="editor" style="height: 600px;"></textarea>
     </div>
 
     <script>
         tinymce.init({
-            selector: 'textarea',
-            plugins: 'image table lists link code',
+            selector: '#editor',
+            height: 600,
+            plugins: 'image table lists link code print preview',
             toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image table link code',
-            menubar: false
+            menubar: true
         });
 
-        function generateWordDoc() {
-            const title = document.getElementById('paperTitle').value;
-            const topic = document.getElementById('seminarTopic').value;
-            const author = document.getElementById('authorName').value;
-            const college = document.getElementById('collegeName').value;
-            const date = document.getElementById('presentationDate').value;
-
-            const abstract = tinymce.get('abstractEditor').getContent({ format: 'text' });
-            const toc = tinymce.get('tocEditor').getContent({ format: 'text' });
-            const introduction = tinymce.get('introductionEditor').getContent({ format: 'text' });
-            const literatureReview = tinymce.get('literatureReviewEditor').getContent({ format: 'text' });
-            const methodology = tinymce.get('methodologyEditor').getContent({ format: 'text' });
-            const analysis = tinymce.get('analysisEditor').getContent({ format: 'text' });
-            const conclusion = tinymce.get('conclusionEditor').getContent({ format: 'text' });
-            const references = tinymce.get('referencesEditor').getContent({ format: 'text' });
-            const appendices = tinymce.get('appendicesEditor').getContent({ format: 'text' });
-
-            const content = `
-                Seminar Paper
-
-                Title: ${title}
-                Seminar Topic: ${topic}
-                Author: ${author}
-                College: ${college}
-                Date: ${date}
-
-                Abstract
-                ${abstract}
-
-                Table of Contents
-                ${toc}
-
-                Introduction
-                ${introduction}
-
-                Literature Review
-                ${literatureReview}
-
-                Methodology
-                ${methodology}
-
-                Analysis and Discussion
-                ${analysis}
-
-                Conclusion
-                ${conclusion}
-
-                References
-                ${references}
-
-                Appendices
-                ${appendices}
-            `;
-
+        function saveAsWord() {
+            const content = tinymce.get('editor').getContent();
             const blob = new Blob([content], { type: 'application/msword' });
             saveAs(blob, 'Seminar_Paper.doc');
+        }
+
+        function printDocument() {
+            const content = tinymce.get('editor').getContent();
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Seminar Paper</title></head><body>');
+            printWindow.document.write(content);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
     </script>
 
