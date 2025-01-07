@@ -84,72 +84,86 @@
         <h2 id="abstract">सारांश (Abstract)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter abstract (150-250 words)"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="toc">सामग्री तालिका (Table of Contents)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter table of contents"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="introduction">परिचय (Introduction)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter introduction"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="literatureReview">साहित्य समीक्षा (Literature Review)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter literature review"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="methodology">कार्यप्रणाली (Methodology)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter methodology"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="analysis">विश्लेषण (Analysis and Discussion)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter analysis and discussion"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="conclusion">निष्कर्ष (Conclusion)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter conclusion"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="references">सन्दर्भ (References)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter references"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
         <h2 id="appendices">परिशिष्ट (Appendices)</h2>
         <textarea class="form-control mb-4" rows="5" placeholder="Enter appendices"></textarea>
         <div class="tools">
-            <button class="btn btn-secondary btn-sm">Insert Image</button>
-            <button class="btn btn-secondary btn-sm">Insert Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertImage(this)">Insert Image</button>
+            <button class="btn btn-secondary btn-sm" onclick="insertTable(this)">Insert Table</button>
         </div>
 
-        <button class="btn btn-primary">Save Seminar Paper</button>
+        <button class="btn btn-primary" onclick="saveSeminarPaper()">Save Seminar Paper</button>
         <button class="btn btn-success" onclick="generateWordDoc()">Download as Word</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function insertImage(button) {
+            const textarea = button.parentElement.previousElementSibling;
+            textarea.value += '\n[Insert Image Here]\n';
+        }
+
+        function insertTable(button) {
+            const textarea = button.parentElement.previousElementSibling;
+            textarea.value += '\n[Insert Table Here]\n';
+        }
+
+        function saveSeminarPaper() {
+            alert('Seminar paper has been saved successfully!');
+        }
+
         function generateWordDoc() {
             alert('Your seminar paper is being generated as a Word document.');
             // Additional logic to generate Word document can be added here.
