@@ -135,39 +135,50 @@
             const college = document.getElementById('collegeName').value;
             const date = document.getElementById('presentationDate').value;
 
-            const abstract = tinymce.get('abstractEditor').getContent();
-            const toc = tinymce.get('tocEditor').getContent();
-            const introduction = tinymce.get('introductionEditor').getContent();
-            const literatureReview = tinymce.get('literatureReviewEditor').getContent();
-            const methodology = tinymce.get('methodologyEditor').getContent();
-            const analysis = tinymce.get('analysisEditor').getContent();
-            const conclusion = tinymce.get('conclusionEditor').getContent();
-            const references = tinymce.get('referencesEditor').getContent();
-            const appendices = tinymce.get('appendicesEditor').getContent();
+            const abstract = tinymce.get('abstractEditor').getContent({ format: 'text' });
+            const toc = tinymce.get('tocEditor').getContent({ format: 'text' });
+            const introduction = tinymce.get('introductionEditor').getContent({ format: 'text' });
+            const literatureReview = tinymce.get('literatureReviewEditor').getContent({ format: 'text' });
+            const methodology = tinymce.get('methodologyEditor').getContent({ format: 'text' });
+            const analysis = tinymce.get('analysisEditor').getContent({ format: 'text' });
+            const conclusion = tinymce.get('conclusionEditor').getContent({ format: 'text' });
+            const references = tinymce.get('referencesEditor').getContent({ format: 'text' });
+            const appendices = tinymce.get('appendicesEditor').getContent({ format: 'text' });
 
             const content = `
-                <h1>${title}</h1>
-                <p><strong>Seminar Topic:</strong> ${topic}</p>
-                <p><strong>Author:</strong> ${author}</p>
-                <p><strong>College:</strong> ${college}</p>
-                <p><strong>Date:</strong> ${date}</p>
-                <h2>Abstract</h2>
+                Seminar Paper
+
+                Title: ${title}
+                Seminar Topic: ${topic}
+                Author: ${author}
+                College: ${college}
+                Date: ${date}
+
+                Abstract
                 ${abstract}
-                <h2>Table of Contents</h2>
+
+                Table of Contents
                 ${toc}
-                <h2>Introduction</h2>
+
+                Introduction
                 ${introduction}
-                <h2>Literature Review</h2>
+
+                Literature Review
                 ${literatureReview}
-                <h2>Methodology</h2>
+
+                Methodology
                 ${methodology}
-                <h2>Analysis and Discussion</h2>
+
+                Analysis and Discussion
                 ${analysis}
-                <h2>Conclusion</h2>
+
+                Conclusion
                 ${conclusion}
-                <h2>References</h2>
+
+                References
                 ${references}
-                <h2>Appendices</h2>
+
+                Appendices
                 ${appendices}
             `;
 
