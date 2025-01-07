@@ -6,6 +6,7 @@
     <title>Seminar Paper Preparation Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tinymce/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -128,8 +129,50 @@
         });
 
         function generateWordDoc() {
-            alert('Your seminar paper is being generated as a Word document.');
-            // Additional logic to generate Word document can be added here.
+            const title = document.getElementById('paperTitle').value;
+            const topic = document.getElementById('seminarTopic').value;
+            const author = document.getElementById('authorName').value;
+            const college = document.getElementById('collegeName').value;
+            const date = document.getElementById('presentationDate').value;
+
+            const abstract = tinymce.get('abstractEditor').getContent();
+            const toc = tinymce.get('tocEditor').getContent();
+            const introduction = tinymce.get('introductionEditor').getContent();
+            const literatureReview = tinymce.get('literatureReviewEditor').getContent();
+            const methodology = tinymce.get('methodologyEditor').getContent();
+            const analysis = tinymce.get('analysisEditor').getContent();
+            const conclusion = tinymce.get('conclusionEditor').getContent();
+            const references = tinymce.get('referencesEditor').getContent();
+            const appendices = tinymce.get('appendicesEditor').getContent();
+
+            const content = `
+                <h1>${title}</h1>
+                <p><strong>Seminar Topic:</strong> ${topic}</p>
+                <p><strong>Author:</strong> ${author}</p>
+                <p><strong>College:</strong> ${college}</p>
+                <p><strong>Date:</strong> ${date}</p>
+                <h2>Abstract</h2>
+                ${abstract}
+                <h2>Table of Contents</h2>
+                ${toc}
+                <h2>Introduction</h2>
+                ${introduction}
+                <h2>Literature Review</h2>
+                ${literatureReview}
+                <h2>Methodology</h2>
+                ${methodology}
+                <h2>Analysis and Discussion</h2>
+                ${analysis}
+                <h2>Conclusion</h2>
+                ${conclusion}
+                <h2>References</h2>
+                ${references}
+                <h2>Appendices</h2>
+                ${appendices}
+            `;
+
+            const blob = new Blob([content], { type: 'application/msword' });
+            saveAs(blob, 'Seminar_Paper.doc');
         }
     </script>
 
