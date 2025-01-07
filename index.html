@@ -3,291 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voucher Form</title>
+    <title>Seminar Paper Preparation Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            background-color: #f8f9fa;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
         }
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        select {
-            appearance: none;
-            background-color: #f9f9f9;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
             color: white;
-            border: none;
-            border-radius: 4px;
+            padding: 20px;
+            position: fixed;
+            overflow-y: auto;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
             font-size: 18px;
-            cursor: pointer;
-            margin-top: 10px;
         }
-        .btn:hover {
-            background-color: #45a049;
+        .sidebar a:hover {
+            text-decoration: underline;
         }
-        .checklist {
-            margin: 10px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .section-title {
             margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        .upload {
             margin-bottom: 20px;
         }
-        .expense-checklist {
-            display: none;
-            margin-top: 15px;
+        .tools {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Voucher Entry Form</h1>
-        <form id="voucherForm" onsubmit="addFormDataToTable(event)">
-            <div class="form-group">
-                <label for="voucherNumber">भौचर नं</label>
-                <input type="text" id="voucherNumber" name="voucherNumber" placeholder="Enter Voucher Number">
-            </div>
-
-            <div class="form-group">
-                <label for="source">श्रोत</label>
-                <input type="text" id="source" name="source" placeholder="Enter Source">
-            </div>
-
-            <div class="form-group">
-                <label for="amount">कारोबार रकम</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter Amount">
-            </div>
-
-            <div class="form-group">
-                <label for="transactionDetails">कारोबारको ब्यहोरा</label>
-                <textarea id="transactionDetails" name="transactionDetails" placeholder="Enter Transaction Details"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="payeeName">भुक्तानी पाउनेको नाम</label>
-                <input type="text" id="payeeName" name="payeeName" placeholder="Enter Payee Name">
-            </div>
-
-            <div class="form-group">
-                <label for="panNumber">पान नं</label>
-                <input type="text" id="panNumber" name="panNumber" placeholder="Enter PAN Number">
-            </div>
-
-            <div class="form-group">
-                <label for="expenseType">खर्च शिर्षक</label>
-                <select id="expenseType" name="expenseType" onchange="updateExpenseChecklist()">
-                    <option value="">-- Select Type --</option>
-                    <option value="current">चालु</option>
-                    <option value="capital">पुजिगत</option>
-                </select>
-
-                <div id="currentExpenses" class="expense-checklist">
-                    <label>चालु खर्च:</label>
-                    <input type="checkbox" id="municipalityCurrent" name="currentExpenses" value="नगरपालिका चालु"> नगरपालिका चालु<br>
-                    <input type="checkbox" id="subjectBranchCurrent" name="currentExpenses" value="विषयगत शाखा चालु"> विषयगत शाखा चालु<br>
-                    <input type="checkbox" id="federalConditionalCurrent" name="currentExpenses" value="संघीय शसर्त चालु"> संघीय शसर्त चालु<br>
-                    <input type="checkbox" id="provincialConditionalCurrent" name="currentExpenses" value="प्रदेश सशर्त चालु"> प्रदेश सशर्त चालु<br>
-                </div>
-
-                <div id="capitalExpenses" class="expense-checklist">
-                    <label>पुजिगत खर्च:</label>
-                    <input type="checkbox" id="federalConditionalCapital" name="capitalExpenses" value="संघीय शसर्त पुजिगत"> संघीय शसर्त पुजिगत<br>
-                    <input type="checkbox" id="provincialConditionalCapital" name="capitalExpenses" value="प्रदेश सशर्त पुजिगत"> प्रदेश सशर्त पुजिगत<br>
-                    <input type="checkbox" id="municipalityCapital" name="capitalExpenses" value="नगरपालिका पुजिगत"> नगरपालिका पुजिगत<br>
-                    <input type="checkbox" id="repairFund" name="capitalExpenses" value="मर्मत संभार कोष"> मर्मत संभार कोष<br>
-                    <input type="checkbox" id="disasterFund" name="capitalExpenses" value="विपद व्यवस्थापन कोष"> विपद व्यवस्थापन कोष<br>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="documents">कागजातहरुको चेकलिस्ट</label>
-                <div class="checklist">
-                    <input type="checkbox" id="purchaseDecision" name="documents" value="खरिद निर्णय"> खरिद निर्णय<br>
-                    <input type="checkbox" id="costEstimate" name="documents" value="लागत अनुमान"> लागत अनुमान<br>
-                    <input type="checkbox" id="workOrder" name="documents" value="कार्यदेश"> कार्यदेश<br>
-                    <input type="checkbox" id="agreement" name="documents" value="सम्झौता"> सम्झौता<br>
-                    <input type="checkbox" id="photos" name="documents" value="तस्वीरहरु"> तस्वीरहरु<br>
-                    <input type="checkbox" id="performanceReport" name="documents" value="कार्यसम्पादन प्रतिवेदन"> कार्यसम्पादन प्रतिवेदन<br>
-                    <input type="checkbox" id="performanceGuarantee" name="documents" value="कार्यसम्पादन जमानत"> कार्यसम्पादन जमानत<br>
-                    <input type="checkbox" id="specifications" name="documents" value="स्पेशिफिकेशन"> स्पेशिफिकेशन<br>
-                    <input type="checkbox" id="workAcceptanceReport" name="documents" value="कार्य स्वीकृति प्रतिवेदन"> कार्य स्वीकृति प्रतिवेदन<br>
-                    <input type="checkbox" id="paymentRecommendation" name="documents" value="भुक्तानी सिफारिस"> भुक्तानी सिफारिस<br>
-                    <input type="checkbox" id="psItemBill" name="documents" value="पिएस आइटम बिल"> पिएस आइटम बिल<br>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="branch">शाखाहरुको नाम</label>
-                <input type="text" id="branch" name="branch" placeholder="Enter Branch Name">
-            </div>
-
-            <div class="form-group">
-                <label for="remarks">कैफीयत</label>
-                <textarea id="remarks" name="remarks" placeholder="Enter Remarks"></textarea>
-            </div>
-
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th>भौचर नं</th>
-                        <th>श्रोत</th>
-                        <th>कारोबार रकम</th>
-                        <th>कारोबारको ब्यहोरा</th>
-                        <th>भुक्तानी पाउनेको नाम</th>
-                        <th>पान नं</th>
-                        <th>खर्च शिर्षक</th>
-                        <th>शाखाहरुको नाम</th>
-                        <th>कैफीयत</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-
-            <h2>बिल र भरपाइ तालिका</h2>
-            <table id="calculationTable">
-                <thead>
-                    <tr>
-                        <th>क्रस</th>
-                        <th>PAN बिल</th>
-                        <th>VAT बिल</th>
-                        <th>भरपाइ</th>
-                        <th>कर नलाग्ने बिल तथा भरपाइ</th>
-                        <th>डोर हाजीरी</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                        <td><input type="number" class="calc-input" oninput="calculateTotals()"></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6" style="text-align:right; font-weight:bold;">योगफल:</td>
-                        <td id="totalCell" style="font-weight:bold;">0</td>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <button type="button" class="btn" onclick="addRowToCalculationTable()">Add Row</button>
-            <button type="submit" class="btn">Submit</button>
-            <button type="button" class="btn" onclick="downloadTableAsWord()">Download as Word</button>
-            <button type="button" class="btn" onclick="printPage()">Print / Save as PDF</button>
-        </form>
+    <div class="sidebar">
+        <h2>सेमिनार पेपर</h2>
+        <a href="#titlePage">शीर्षक पृष्ठ</a>
+        <a href="#abstract">सारांश</a>
+        <a href="#toc">सामग्री तालिका</a>
+        <a href="#introduction">परिचय</a>
+        <a href="#literatureReview">साहित्य समीक्षा</a>
+        <a href="#methodology">कार्यप्रणाली</a>
+        <a href="#analysis">विश्लेषण</a>
+        <a href="#conclusion">निष्कर्ष</a>
+        <a href="#references">सन्दर्भ</a>
+        <a href="#appendices">परिशिष्ट</a>
     </div>
 
+    <div class="content">
+        <h1 id="titlePage">शीर्षक पृष्ठ (Title Page)</h1>
+        <form>
+            <div class="mb-3">
+                <label for="paperTitle" class="form-label">पेपरको शीर्षक</label>
+                <input type="text" class="form-control" id="paperTitle" placeholder="Enter paper title">
+            </div>
+            <div class="mb-3">
+                <label for="seminarTopic" class="form-label">सेमिनारको विषय</label>
+                <input type="text" class="form-control" id="seminarTopic" placeholder="Enter seminar topic">
+            </div>
+            <div class="mb-3">
+                <label for="authorName" class="form-label">लेखकको नाम</label>
+                <input type="text" class="form-control" id="authorName" placeholder="Enter author name">
+            </div>
+            <div class="mb-3">
+                <label for="collegeName" class="form-label">संस्था/कलेजको नाम</label>
+                <input type="text" class="form-control" id="collegeName" placeholder="Enter college name">
+            </div>
+            <div class="mb-3">
+                <label for="presentationDate" class="form-label">प्रस्तुत गर्ने मिति</label>
+                <input type="date" class="form-control" id="presentationDate">
+            </div>
+        </form>
+
+        <h2 id="abstract">सारांश (Abstract)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter abstract (150-250 words)"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="toc">सामग्री तालिका (Table of Contents)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter table of contents"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="introduction">परिचय (Introduction)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter introduction"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="literatureReview">साहित्य समीक्षा (Literature Review)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter literature review"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="methodology">कार्यप्रणाली (Methodology)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter methodology"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="analysis">विश्लेषण (Analysis and Discussion)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter analysis and discussion"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="conclusion">निष्कर्ष (Conclusion)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter conclusion"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="references">सन्दर्भ (References)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter references"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <h2 id="appendices">परिशिष्ट (Appendices)</h2>
+        <textarea class="form-control mb-4" rows="5" placeholder="Enter appendices"></textarea>
+        <div class="tools">
+            <button class="btn btn-secondary btn-sm">Insert Image</button>
+            <button class="btn btn-secondary btn-sm">Insert Table</button>
+        </div>
+
+        <button class="btn btn-primary">Save Seminar Paper</button>
+        <button class="btn btn-success" onclick="generateWordDoc()">Download as Word</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function updateExpenseChecklist() {
-            const expenseType = document.getElementById('expenseType').value;
-            document.getElementById('currentExpenses').style.display = expenseType === 'current' ? 'block' : 'none';
-            document.getElementById('capitalExpenses').style.display = expenseType === 'capital' ? 'block' : 'none';
-        }
-
-        function addFormDataToTable(event) {
-            event.preventDefault();
-            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const row = table.insertRow();
-
-            const formData = [
-                document.getElementById('voucherNumber').value,
-                document.getElementById('source').value,
-                document.getElementById('amount').value,
-                document.getElementById('transactionDetails').value,
-                document.getElementById('payeeName').value,
-                document.getElementById('panNumber').value,
-                document.getElementById('expenseType').value,
-                document.getElementById('branch').value,
-                document.getElementById('remarks').value
-            ];
-
-            formData.forEach(data => {
-                const cell = row.insertCell();
-                cell.textContent = data;
-            });
-
-            document.getElementById('voucherForm').reset();
-        }
-
-        function addRowToCalculationTable() {
-            const table = document.getElementById('calculationTable').getElementsByTagName('tbody')[0];
-            const row = table.insertRow();
-            for (let i = 0; i < 6; i++) {
-                const cell = row.insertCell();
-                cell.innerHTML = '<input type="number" class="calc-input" oninput="calculateTotals()">';
-            }
-        }
-
-        function calculateTotals() {
-            const inputs = document.querySelectorAll('.calc-input');
-            let total = 0;
-            inputs.forEach(input => {
-                total += parseFloat(input.value) || 0;
-            });
-            document.getElementById('totalCell').textContent = total.toFixed(2);
-        }
-
-        function downloadTableAsWord() {
-            const table = document.getElementById('dataTable');
-            let html = "<table border='1' style='border-collapse: collapse; width: 100%;'>";
-            html += table.innerHTML;
-            html += "</table>";
-
-            const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'voucher_data.doc';
-            link.click();
-        }
-
-        function printPage() {
-            window.print();
+        function generateWordDoc() {
+            alert('Your seminar paper is being generated as a Word document.');
+            // Additional logic to generate Word document can be added here.
         }
     </script>
 </body>
